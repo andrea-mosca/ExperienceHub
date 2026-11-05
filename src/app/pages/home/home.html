@@ -1,1 +1,56 @@
-<p>home works!</p>
+<!-- Hero section -->
+<section class="hero py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge text-bg-primary mb-3">
+                    Vivi qualcosa di nuovo
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3">
+                    Le esperienze migliori
+                    <span class="text-primary">iniziano qui.</span>
+                </h1>
+
+                <p class="lead text-secondary mb-4">
+                    Scopri attività, workshop e avventure pensate per
+                    farti esplorare nuove passioni e creare ricordi.
+                </p>
+
+                <a routerLink="/esperienze" class="btn btn-primary btn-lg">
+                    Esplora le esperienze
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Esperienze in evidenza</h2>
+            <p class="text-secondary mb-0">
+                Lasciati ispirare dalle nostre proposte
+            </p>
+        </div>
+
+        <a routerLink="/esperienze" class="text-decoration-none">
+            Scopri tutte →
+        </a>
+    </div>
+
+    <div class="row g-4">
+
+        @for (esperienza of esperienze; track esperienza.id) {
+        <div class="col-md-4">
+            <app-card-esperienza [esperienza]="esperienza">
+            </app-card-esperienza>
+        </div>
+        }
+
+    </div>
+
+</section>
