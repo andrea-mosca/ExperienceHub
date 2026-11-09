@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
 import { Esperienza } from '../../models/esperienza';
@@ -10,15 +10,15 @@ import { EsperienzeService } from '../../services/esperienze-service';
   templateUrl: './dettaglio-esperienza.html',
   styleUrl: './dettaglio-esperienza.css',
 })
-export class DettaglioEsperienza {
+export class DettaglioEsperienza implements OnInit {
+  private route = inject(ActivatedRoute);
+  private esperienzeService = inject(EsperienzeService);
+
   esperienza?: Esperienza;
 
-  constructor(
-    private route: ActivatedRoute,
-    private esperienzaService: EsperienzeService,
-  ) {
+  ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.esperienza = this.esperienzaService.getEsperienzaById(id);
+    this.esperienza = this.esperienzeService.getEsperienzaById(id);
   }
 }
