@@ -25,7 +25,7 @@ export class EsperienzeService {
       categoria: 'Ceramica',
       prezzo: 30,
       immagine:
-        'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1599958336382-c6a7c598925c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     },
     {
       id: 3,
@@ -173,7 +173,7 @@ export class EsperienzeService {
       categoria: 'Outdoor',
       prezzo: 40,
       immagine:
-        'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1588472235276-7638965471e2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     },
     {
       id: 17,
@@ -193,11 +193,17 @@ export class EsperienzeService {
       categoria: 'Outdoor',
       prezzo: 20,
       immagine:
-        'https://images.unsplash.com/photo-1506126613408-aca07ce68773?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1758274535230-3641d0632878?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     },
   ];
 
   getEsperienze(): Esperienza[] {
     return this.esperienze;
+  }
+  getEsperienzeInEvidenza(): Esperienza[] {
+    return this.esperienze.filter((esperienza) => [1, 4, 10].includes(esperienza.id));
+  }
+  getEsperienzaById(id: number): Esperienza | undefined {
+    return this.esperienze.find((esperienza) => esperienza.id === id);
   }
 }
