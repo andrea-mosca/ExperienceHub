@@ -6,10 +6,11 @@ import { EsperienzeService } from '../../services/esperienze-service';
 
 import { DurataEsperienzaPipe } from '../../pipes/durata-esperienza-pipe';
 import { DisponibilitaEsperienza } from '../../directives/disponibilita-esperienza';
+import { DisponibilitaPipe } from '../../pipes/disponibilita-pipe';
 
 @Component({
   selector: 'app-dettaglio-esperienza',
-  imports: [RouterLink, DurataEsperienzaPipe, DisponibilitaEsperienza],
+  imports: [RouterLink, DurataEsperienzaPipe, DisponibilitaEsperienza, DisponibilitaPipe],
   templateUrl: './dettaglio-esperienza.html',
   styleUrl: './dettaglio-esperienza.css',
 })
