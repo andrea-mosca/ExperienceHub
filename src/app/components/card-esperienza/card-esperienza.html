@@ -1,5 +1,5 @@
 <!-- costruisce dinamicamente il percorso aggiungendo l'ID dell'esperienza all'URL-->
-<a class="card h-100 experience-card" [routerLink]="'/esperienza/'+ esperienza.id">
+<a class="card h-100 experience-card" [routerLink]="'/esperienza/'+ esperienza.id" appCardEffect>
     <img [src]="esperienza.immagine" [alt]="esperienza.titolo" class="card-img-top">
 
     <div class="card-body d-flex flex-column">
