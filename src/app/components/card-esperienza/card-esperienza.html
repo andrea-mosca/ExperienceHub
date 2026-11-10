@@ -3,9 +3,10 @@
     <img [src]="esperienza.immagine" [alt]="esperienza.titolo" class="card-img-top">
 
     <div class="card-body d-flex flex-column">
+        @let etichetta= esperienza.categoria | stileEtichettaCategoria;
+        <span class="badge text-bg-light align-self-start mb-2" [ngClass]="etichetta.classe">
+            {{ etichetta.emoji }} {{ etichetta.nome }}
 
-        <span class="badge text-bg-light align-self-start mb-2">
-            {{ esperienza.categoria }}
         </span>
 
         <h5 class="card-title">

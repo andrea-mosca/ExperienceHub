@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 import { Esperienza } from '../../models/esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
@@ -7,10 +8,17 @@ import { EsperienzeService } from '../../services/esperienze-service';
 import { DurataEsperienzaPipe } from '../../pipes/durata-esperienza-pipe';
 import { DisponibilitaEsperienza } from '../../directives/disponibilita-esperienza';
 import { DisponibilitaPipe } from '../../pipes/disponibilita-pipe';
-
+import { StileEtichettaCategoriaPipe } from '../../pipes/stile-etichetta-categoria-pipe';
 @Component({
   selector: 'app-dettaglio-esperienza',
-  imports: [RouterLink, DurataEsperienzaPipe, DisponibilitaEsperienza, DisponibilitaPipe],
+  imports: [
+    RouterLink,
+    NgClass,
+    DurataEsperienzaPipe,
+    DisponibilitaEsperienza,
+    DisponibilitaPipe,
+    StileEtichettaCategoriaPipe,
+  ],
   templateUrl: './dettaglio-esperienza.html',
   styleUrl: './dettaglio-esperienza.css',
 })
