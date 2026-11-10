@@ -5,4 +5,7 @@ export interface Esperienza {
   categoria: string;
   prezzo: number;
   immagine: string;
+  postiTotali: number;
+  postiDisponibili: number;
+  durata: number;
 }

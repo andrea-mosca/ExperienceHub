@@ -4,9 +4,11 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { Esperienza } from '../../models/esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
 
+import { DurataEsperienzaPipe } from '../../pipes/durata-esperienza-pipe';
+
 @Component({
   selector: 'app-dettaglio-esperienza',
-  imports: [RouterLink],
+  imports: [RouterLink, DurataEsperienzaPipe],
   templateUrl: './dettaglio-esperienza.html',
   styleUrl: './dettaglio-esperienza.css',
 })

@@ -1,1 +1,13 @@
-<p>esperienze works!</p>
+<section class="container">filtri ricerca</section>
+<section class="container py-5">
+    <div class="row g-4">
+        @for (esperienza of esperienze; track esperienza.id) {
+        <div class="col-md-4">
+            <app-card-esperienza [esperienza]="esperienza">
+
+            </app-card-esperienza>
+        </div>
+        }
+    </div>
+
+</section>
