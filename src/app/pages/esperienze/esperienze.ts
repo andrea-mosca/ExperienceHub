@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Esperienza } from '../../models/esperienza';
 import { CardEsperienza } from '../../components/card-esperienza/card-esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
 
@@ -11,11 +10,24 @@ import { EsperienzeService } from '../../services/esperienze-service';
   templateUrl: './esperienze.html',
   styleUrl: './esperienze.css',
 })
-export class Esperienze implements OnInit {
-  private esperienzaService = inject(EsperienzeService);
-  esperienze: Esperienza[] = [];
+export class Esperienze {
+  private esperienzeService = inject(EsperienzeService);
 
-  ngOnInit(): void {
-    this.esperienze = this.esperienzaService.getEsperienze();
+  esperienzeFiltrate = this.esperienzeService.esperienzeFiltrate;
+
+  ricerca = this.esperienzeService.ricerca;
+  categoriaSelezionata = this.esperienzeService.categoriaSelezionata;
+  ordinamentoPrezzo = this.esperienzeService.ordinamentoPrezzo;
+  ordinamentoDisponibilita = this.esperienzeService.ordinamentoDisponibilita;
+
+  impostaOrdinamentoPrezzo = (valore: 'predefinito' | 'crescente' | 'decrescente') => {
+    this.esperienzeService.impostaOrdinamentoPrezzo(valore);
+  };
+  impostaOrdinamentoDisponibilita = (valore: 'predefinito' | 'crescente' | 'decrescente') => {
+    this.esperienzeService.impostaOrdinamentoDisponibilita(valore);
+  };
+
+  azzeraFiltri(): void {
+    this.esperienzeService.azzeraFiltri();
   }
 }

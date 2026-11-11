@@ -1,7 +1,73 @@
-<section class="container">filtri ricerca</section>
 <section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Scopri tutte le esperienze</h1>
+        <p class="text-muted">
+            Trova l'attività perfetta per te tra le nostre proposte.
+        </p>
+    </div>
+
+    <!-- FILTRI -->
+    <div class="row g-3 mb-4">
+
+        <!-- Ricerca -->
+        <div class="col-12 col-md-6">
+            <label for="ricerca" class="form-label">Cerca un'esperienza</label>
+            <input type="text" id="ricerca" class="form-control" placeholder="Es. Workshop di ceramica..."
+                [value]="ricerca()" (input)="ricerca.set($any($event.target).value)" />
+        </div>
+
+        <!-- Categoria -->
+        <div class="col-12 col-md-6">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select id="categoria" class="form-select" [value]="categoriaSelezionata()"
+                (change)="categoriaSelezionata.set($any($event.target).value)">
+                <option value="Tutte">Tutte le categorie</option>
+                <option value="Ceramica">Ceramica</option>
+                <option value="Natura">Natura</option>
+                <option value="Cucina">Cucina</option>
+                <option value="Degustazioni">Degustazioni</option>
+                <option value="Creatività">Creatività</option>
+                <option value="Outdoor">Outdoor</option>
+            </select>
+        </div>
+
+    </div>
+    <!-- ORDINAMENTO -->
+    <div class="row g-3 mb-4">
+        <!-- Ordinamento prezzo -->
+        <div class="col-12 col-md-6">
+            <label for="prezzo" class="form-label">Ordina per prezzo</label>
+            <select id="prezzo" class="form-select" [value]="ordinamentoPrezzo()"
+                (change)="impostaOrdinamentoPrezzo($any($event.target).value)">
+                <option value="predefinito">Ordine predefinito</option>
+                <option value="crescente">Dal prezzo più basso</option>
+                <option value="decrescente">Dal prezzo più alto</option>
+            </select>
+        </div>
+
+        <!-- Ordinamento disponibilità -->
+        <div class="col-12 col-md-6">
+            <label for="disponibilita" class="form-label">Ordina per disponibilità</label>
+            <select id="disponibilita" class="form-select" [value]="ordinamentoDisponibilita()"
+                (change)="impostaOrdinamentoDisponibilita($any($event.target).value)">
+                <option value="predefinito">Ordine predefinito</option>
+                <option value="crescente">Meno posti disponibili</option>
+                <option value="decrescente">Più posti disponibili</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" (click)="azzeraFiltri()">Reset filtri</button>
+    </div>
+
+
+</section>
+<section class="container py-5">
+    @if(esperienzeFiltrate().length > 0){
     <div class="row g-4">
-        @for (esperienza of esperienze; track esperienza.id) {
+        @for (esperienza of esperienzeFiltrate(); track esperienza.id) {
         <div class="col-md-4">
             <app-card-esperienza [esperienza]="esperienza">
 
@@ -9,5 +75,14 @@
         </div>
         }
     </div>
+    }@else {
+    <div class="text-center py-5">
+        <h4 class="fw-bold">Nessuna esperienza trovata</h4>
+        <p class="text-muted">
+            Prova a modificare i criteri di ricerca o i filtri selezionati.
+        </p>
+    </div>
+    }
+
 
 </section>

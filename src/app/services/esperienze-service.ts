@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Esperienza } from '../models/esperienza';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EsperienzeService {
-  private esperienze: Esperienza[] = [
+  private esperienze = signal<Esperienza[]>([
     // CATEGORIA: CERAMICA E PITTURA
     {
       id: 1,
@@ -249,15 +249,68 @@ export class EsperienzeService {
       postiDisponibili: 6,
       durata: 60,
     },
-  ];
+  ]);
+  // --signals--
+  ricerca = signal('');
+  categoriaSelezionata = signal('Tutte');
+  ordinamentoPrezzo = signal('predefinito');
+  ordinamentoDisponibilita = signal('predefinito');
 
+  // computed signal per filtrare le esperienze
+  esperienzeFiltrate = computed(() => {
+    const testoRicerca = this.ricerca().toLowerCase();
+    const categoria = this.categoriaSelezionata();
+    const prezzo = this.ordinamentoPrezzo();
+    const disponibilita = this.ordinamentoDisponibilita();
+
+    let risultati = this.esperienze().filter((esperienza) => {
+      const corrispondeRicerca = esperienza.titolo.toLowerCase().includes(testoRicerca);
+
+      const corrispondeCategoria = categoria === 'Tutte' || esperienza.categoria === categoria;
+
+      return corrispondeRicerca && corrispondeCategoria;
+    });
+
+    if (prezzo === 'crescente') {
+      risultati.sort((a, b) => a.prezzo - b.prezzo);
+    } else if (prezzo === 'decrescente') {
+      risultati.sort((a, b) => b.prezzo - a.prezzo);
+    }
+
+    if (disponibilita === 'crescente') {
+      risultati.sort((a, b) => a.postiDisponibili - b.postiDisponibili);
+    } else if (disponibilita === 'decrescente') {
+      risultati.sort((a, b) => b.postiDisponibili - a.postiDisponibili);
+    }
+
+    return risultati;
+  });
+
+  // resetto l'ordinamento precedente se il successivo viene attivato
+  impostaOrdinamentoPrezzo(valore: string): void {
+    this.ordinamentoPrezzo.set(valore);
+    this.ordinamentoDisponibilita.set('predefinito');
+  }
+  impostaOrdinamentoDisponibilita(valore: string): void {
+    this.ordinamentoDisponibilita.set(valore);
+    this.ordinamentoPrezzo.set('predefinito');
+  }
+  // reset tutti i filtri impostati
+  azzeraFiltri(): void {
+    this.ricerca.set('');
+    this.categoriaSelezionata.set('Tutte');
+    this.ordinamentoPrezzo.set('predefinito');
+    this.ordinamentoDisponibilita.set('predefinito');
+  }
+
+  // --metodi service--
   getEsperienze(): Esperienza[] {
-    return this.esperienze;
+    return this.esperienze();
   }
   getEsperienzeInEvidenza(): Esperienza[] {
-    return this.esperienze.filter((esperienza) => [1, 4, 10].includes(esperienza.id));
+    return this.esperienze().filter((esperienza) => [1, 4, 10].includes(esperienza.id));
   }
   getEsperienzaById(id: number): Esperienza | undefined {
-    return this.esperienze.find((esperienza) => esperienza.id === id);
+    return this.esperienze().find((esperienza) => esperienza.id === id);
   }
 }
