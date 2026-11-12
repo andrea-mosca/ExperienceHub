@@ -1,8 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
 
-import { Esperienza } from '../../models/esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
 
 import { DurataEsperienzaPipe } from '../../pipes/durata-esperienza-pipe';
@@ -22,15 +21,16 @@ import { StileEtichettaCategoriaPipe } from '../../pipes/stile-etichetta-categor
   templateUrl: './dettaglio-esperienza.html',
   styleUrl: './dettaglio-esperienza.css',
 })
-export class DettaglioEsperienza implements OnInit {
+export class DettaglioEsperienza {
   private route = inject(ActivatedRoute);
   private esperienzeService = inject(EsperienzeService);
 
-  esperienza?: Esperienza;
+  // Recupera l'ID dell'esperienza dall'URL
+  private id = Number(this.route.snapshot.paramMap.get('id'));
 
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+  // Recupera dal Service il Signal dell'esperienza richiesta
+  esperienza = this.esperienzeService.getEsperienzaById(this.id);
 
-    this.esperienza = this.esperienzeService.getEsperienzaById(id);
-  }
+  caricamento = this.esperienzeService.caricamento;
+  errore = this.esperienzeService.errore;
 }

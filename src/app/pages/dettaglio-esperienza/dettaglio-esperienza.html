@@ -1,4 +1,19 @@
-@if (esperienza) {
+@if (caricamento()) {
+<div class="container py-5 text-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Caricamento...</span>
+    </div>
+    <p class="text-secondary mt-3">Caricamento dell'esperienza...</p>
+</div>
+}
+@else if (errore()) {
+<div class="container py-5 text-center">
+    <div class="alert alert-danger">
+        {{ errore() }}
+    </div>
+</div>
+}
+@else if (esperienza(); as esperienza) {
 <div class="container py-5">
 
     <div class="mb-4">
@@ -38,13 +53,14 @@
 
                 <div class="mb-3">
                     <span class="text-secondary">⏱ Durata</span>
-                    <p class="fw-semibold mb-0">{{esperienza.durata | durataEsperienza}}</p>
+                    <p class="fw-semibold mb-0">{{ esperienza.durata | durataEsperienza }}</p>
                 </div>
 
                 <div class="mb-3">
                     <span class="text-secondary">👥 Disponibilità</span>
                     <p class="fw-semibold mb-0" [appDisponibilitaEsperienza]="esperienza.postiDisponibili">
-                        {{esperienza.postiDisponibili | disponibilita}}</p>
+                        {{ esperienza.postiDisponibili | disponibilita }}
+                    </p>
                 </div>
             </div>
 

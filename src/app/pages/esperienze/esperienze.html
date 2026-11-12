@@ -65,17 +65,39 @@
 
 </section>
 <section class="container py-5">
-    @if(esperienzeFiltrate().length > 0){
+
+    <!-- STATO DI CARICAMENTO -->
+    @if (caricamento()) {
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+        <p class="text-muted mt-3">Caricamento delle esperienze...</p>
+    </div>
+    }
+
+    <!-- STATO DI ERRORE -->
+    @else if (errore()) {
+    <div class="alert alert-danger text-center" role="alert">
+        {{ errore() }}
+    </div>
+    }
+
+    <!-- DATI CARICATI -->
+    @else {
+    @if (esperienzeFiltrate().length > 0) {
     <div class="row g-4">
         @for (esperienza of esperienzeFiltrate(); track esperienza.id) {
         <div class="col-md-4">
             <app-card-esperienza [esperienza]="esperienza">
-
             </app-card-esperienza>
         </div>
         }
     </div>
-    }@else {
+    }
+
+    <!-- NESSUN RISULTATO -->
+    @else {
     <div class="text-center py-5">
         <h4 class="fw-bold">Nessuna esperienza trovata</h4>
         <p class="text-muted">
@@ -83,6 +105,6 @@
         </p>
     </div>
     }
-
+    }
 
 </section>

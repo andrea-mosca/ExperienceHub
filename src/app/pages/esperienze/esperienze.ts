@@ -13,6 +13,10 @@ import { EsperienzeService } from '../../services/esperienze-service';
 export class Esperienze {
   private esperienzeService = inject(EsperienzeService);
 
+  // Recupera dal Service gli stati di caricamento e di errore
+  caricamento = this.esperienzeService.caricamento;
+  errore = this.esperienzeService.errore;
+
   esperienzeFiltrate = this.esperienzeService.esperienzeFiltrate;
 
   ricerca = this.esperienzeService.ricerca;

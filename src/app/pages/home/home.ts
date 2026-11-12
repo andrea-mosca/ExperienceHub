@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Esperienza } from '../../models/esperienza';
@@ -11,11 +11,12 @@ import { EsperienzeService } from '../../services/esperienze-service';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home implements OnInit {
+export class Home {
   private esperienzaService = inject(EsperienzeService);
-  esperienze: Esperienza[] = [];
+  // Recupera le esperienze in evidenza dal Service
+  esperienze = this.esperienzaService.esperienzeInEvidenza;
 
-  ngOnInit(): void {
-    this.esperienze = this.esperienzaService.getEsperienzeInEvidenza();
-  }
+  // Recupera gli stati di caricamento e di errore
+  caricamento = this.esperienzaService.caricamento;
+  errore = this.esperienzaService.errore;
 }
