@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <h2 class="text-center mb-4">Accedi a ExperienceHub</h2>
+
+                    <form (ngSubmit)="effettuaLogin()">
+
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="nome"
+                                placeholder="Inserisci il tuo nome" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" [(ngModel)]="email"
+                                placeholder="Inserisci la tua email" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Accedi
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
