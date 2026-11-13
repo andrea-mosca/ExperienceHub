@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 import { EsperienzeService } from '../../services/esperienze-service';
+import { AutenticazioneService } from '../../services/autenticazione-service';
 
 import { DurataEsperienzaPipe } from '../../pipes/durata-esperienza-pipe';
 import { DisponibilitaEsperienza } from '../../directives/disponibilita-esperienza';
@@ -24,6 +25,8 @@ import { StileEtichettaCategoriaPipe } from '../../pipes/stile-etichetta-categor
 export class DettaglioEsperienza {
   private route = inject(ActivatedRoute);
   private esperienzeService = inject(EsperienzeService);
+  private router = inject(Router);
+  private autenticazioneService = inject(AutenticazioneService);
 
   // Recupera l'ID dell'esperienza dall'URL
   private id = Number(this.route.snapshot.paramMap.get('id'));
@@ -33,4 +36,23 @@ export class DettaglioEsperienza {
 
   caricamento = this.esperienzeService.caricamento;
   errore = this.esperienzeService.errore;
+
+  mostraModuloPrenotazione = false;
+
+  // Gestisce il click sul pulsante Prenota ora
+  prenota(): void {
+    // Se l'utente non è autenticato, lo mandiamo al Login
+    if (!this.autenticazioneService.isAuthenticated()) {
+      this.router.navigate(['/login'], {
+        queryParams: {
+          returnUrl: `/esperienza/${this.id}`,
+        },
+      });
+
+      return;
+    }
+
+    // Se è autenticato, mostriamo il modulo
+    this.mostraModuloPrenotazione = true;
+  }
 }
