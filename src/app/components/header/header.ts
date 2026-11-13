@@ -28,4 +28,14 @@ export class Header {
   chiudiSidebar(): void {
     this.sidebarAperta = false;
   }
+
+  // menu da mobile
+  menuMobileAperto = false;
+  apriMenuMobile(): void {
+    this.menuMobileAperto = !this.menuMobileAperto;
+  }
+
+  chiudiMenuMobile(): void {
+    this.menuMobileAperto = false;
+  }
 }
