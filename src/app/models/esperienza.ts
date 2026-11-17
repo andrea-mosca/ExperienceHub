@@ -1,5 +1,5 @@
 export interface Esperienza {
-  id: number;
+  id: string;
   titolo: string;
   descrizione: string;
   categoria: string;

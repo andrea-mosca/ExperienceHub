@@ -2,6 +2,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Esperienza } from '../models/esperienza';
 
+import { Observable, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -97,21 +98,36 @@ export class EsperienzeService {
   }
 
   // --metodi service--
-  // getEsperienze(): Esperienza[] {
-  //   return this.esperienzeSignal();
-  // }
-  // getEsperienzeInEvidenza(): Esperienza[] {
-  //   return this.esperienzeSignal().filter((esperienza) => [1, 4, 10].includes(esperienza.id));
-  // }
+
   // Restituisce automaticamente le esperienze in evidenza
   esperienzeInEvidenza = computed(() =>
-    this.esperienze().filter((esperienza) => [1, 4, 10].includes(esperienza.id)),
+    this.esperienze().filter((esperienza) => ['1', '4', '10'].includes(esperienza.id)),
   );
-  // getEsperienzaById(id: number): Esperienza | undefined {
-  //   return this.esperienzeSignal().find((esperienza) => esperienza.id === id);
-  // }
+
   // Cerca un'esperienza tramite ID e restituisce un Signal reattivo
-  getEsperienzaById(id: number) {
+  getEsperienzaById(id: string) {
     return computed(() => this.esperienze().find((esperienza) => esperienza.id === id));
+  }
+
+  // Aggiorna i posti disponibili di un'esperienza
+  aggiornaPostiDisponibili(id: string, nuoviPosti: number): Observable<Esperienza> {
+    const esperienza = this.esperienzeSignal().find((e) => e.id === id);
+
+    if (!esperienza) {
+      throw new Error('Esperienza non trovata');
+    }
+
+    return this.http
+      .put<Esperienza>(`${this.apiUrl}/${id}`, {
+        ...esperienza,
+        postiDisponibili: nuoviPosti,
+      })
+      .pipe(
+        tap((esperienzaAggiornata) => {
+          this.esperienzeSignal.update((esperienze) =>
+            esperienze.map((e) => (e.id === id ? esperienzaAggiornata : e)),
+          );
+        }),
+      );
   }
 }
