@@ -22,6 +22,18 @@
         </a>
     </div>
 
+    @if (messaggioPrenotazione(); as messaggio) {
+    <div class="alert mb-4" [ngClass]="{
+    'alert-success': messaggio.tipo === 'successo',
+    'alert-danger': messaggio.tipo === 'errore',
+    'alert-warning': messaggio.tipo === 'avviso'
+}">
+        {{ messaggio.testo }}
+    </div>
+    }
+
+
+
     <div class="row g-5">
 
         <div class="col-lg-7">
@@ -135,7 +147,7 @@
                         </div>
 
                         <button type="button" class="btn btn-primary w-100 mt-4" (click)="confermaPrenotazione()"
-                            [disabled]="prenotazioneInCorso()">
+                            [disabled]="prenotazioneInCorso() || prenotazioneSalvata()">
 
                             @if (prenotazioneInCorso()) {
                             <span class="spinner-border spinner-border-sm me-2"></span>

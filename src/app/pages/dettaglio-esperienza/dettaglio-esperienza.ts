@@ -42,6 +42,12 @@ export class DettaglioEsperienza {
 
   mostraModuloPrenotazione = false;
   prenotazioneInCorso = signal(false);
+  prenotazioneSalvata = signal(false);
+
+  messaggioPrenotazione = signal<{
+    tipo: 'successo' | 'errore' | 'avviso';
+    testo: string;
+  } | null>(null);
 
   // numero di posti minimi prenotabili
   numeroPosti = signal(1);
@@ -77,16 +83,21 @@ export class DettaglioEsperienza {
     const esperienza = this.esperienza();
     const utente = this.autenticazioneService.utente();
 
-    if (!esperienza || !utente || this.prenotazioneInCorso()) {
+    if (!esperienza || !utente || this.prenotazioneInCorso() || this.prenotazioneSalvata()) {
       return;
     }
 
     const postiDaPrenotare = this.numeroPosti();
 
     if (postiDaPrenotare < 1 || postiDaPrenotare > esperienza.postiDisponibili) {
+      this.messaggioPrenotazione.set({
+        tipo: 'avviso',
+        testo: 'Il numero di posti selezionato non è disponibile.',
+      });
       return;
     }
 
+    this.messaggioPrenotazione.set(null);
     this.prenotazioneInCorso.set(true);
 
     const nuovaPrenotazione = {
@@ -99,8 +110,9 @@ export class DettaglioEsperienza {
     };
 
     this.prenotazioniService.creaPrenotazione(nuovaPrenotazione).subscribe({
-      next: (risposta) => {
-        console.log('Prenotazione salvata:', risposta);
+      next: () => {
+        // La prenotazione è stata salvata su MockAPI
+        this.prenotazioneSalvata.set(true);
 
         const nuoviPostiDisponibili = esperienza.postiDisponibili - postiDaPrenotare;
 
@@ -108,22 +120,39 @@ export class DettaglioEsperienza {
           .aggiornaPostiDisponibili(esperienza.id, nuoviPostiDisponibili)
           .subscribe({
             next: () => {
+              this.prenotazioneSalvata.set(false);
               this.prenotazioneInCorso.set(false);
               this.mostraModuloPrenotazione = false;
               this.numeroPosti.set(1);
+
+              this.messaggioPrenotazione.set({
+                tipo: 'successo',
+                testo: 'Prenotazione completata con successo! Ti aspettiamo.',
+              });
             },
             error: (errore) => {
-              console.error(
-                'Prenotazione salvata, ma aggiornamento disponibilità fallito:',
-                errore,
-              );
+              console.error('Errore aggiornamento disponibilità:', errore);
+
               this.prenotazioneInCorso.set(false);
+              this.mostraModuloPrenotazione = false;
+
+              this.messaggioPrenotazione.set({
+                tipo: 'errore',
+                testo:
+                  'La prenotazione è stata salvata, ma non è stato possibile aggiornare i posti disponibili. Contatta l’assistenza.',
+              });
             },
           });
       },
       error: (errore) => {
         console.error('Errore prenotazione:', errore);
+
         this.prenotazioneInCorso.set(false);
+
+        this.messaggioPrenotazione.set({
+          tipo: 'errore',
+          testo: 'Non è stato possibile completare la prenotazione. Riprova.',
+        });
       },
     });
   }
