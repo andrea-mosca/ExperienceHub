@@ -10,6 +10,12 @@
 
     <!-- Caricamento -->
     @if (caricamento()) {
+    @if (messaggioAnnullamento(); as messaggio) {
+    <div class="alert" role="alert" [class.alert-success]="messaggio.tipo === 'successo'"
+        [class.alert-danger]="messaggio.tipo === 'errore'" [class.alert-warning]="messaggio.tipo === 'avviso'">
+        {{ messaggio.testo }}
+    </div>
+    }
     <div class="text-center py-5">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Caricamento...</span>
@@ -109,7 +115,23 @@
                         </div>
 
                     </div>
+                    <div class="d-flex justify-content-end mt-4">
 
+                        <button type="button" class="btn btn-outline-danger"
+                            [disabled]="annullamentoInCorso() !== null || caricamentoEsperienze()"
+                            (click)="annullaPrenotazione(prenotazione)">
+
+                            @if (annullamentoInCorso() === prenotazione.id) {
+                            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                            Annullamento...
+                            } @else {
+                            <i class="bi bi-x-circle me-2"></i>
+                            Annulla prenotazione
+                            }
+
+                        </button>
+
+                    </div>
                 </div>
             </article>
 

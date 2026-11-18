@@ -51,4 +51,15 @@ export class PrenotazioniService {
       }),
     );
   }
+
+  // elimina una prenotazione
+  eliminaPrenotazione(id: string): Observable<Prenotazione> {
+    return this.http.delete<Prenotazione>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        this.prenotazioniSignal.update((prenotazioni) =>
+          prenotazioni.filter((prenotazione) => prenotazione.id !== id),
+        );
+      }),
+    );
+  }
 }
