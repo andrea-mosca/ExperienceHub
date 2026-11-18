@@ -2,7 +2,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Esperienza } from '../models/esperienza';
 
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -114,7 +114,7 @@ export class EsperienzeService {
     const esperienza = this.esperienzeSignal().find((e) => e.id === id);
 
     if (!esperienza) {
-      throw new Error('Esperienza non trovata');
+      return throwError(() => new Error('Esperienza non trovata'));
     }
 
     return this.http

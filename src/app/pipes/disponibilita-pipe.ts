@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DisponibilitaPipe implements PipeTransform {
   transform(postiDisponibili: number): string {
-    if (postiDisponibili === 0) {
+    if (postiDisponibili <= 0) {
       return 'Posti esauriti';
     } else if (postiDisponibili === 1) {
       return 'Ultimo posto disponibile!';

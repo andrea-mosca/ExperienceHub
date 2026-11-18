@@ -33,12 +33,31 @@ export class AutenticazioneService {
   // verifichiamo alla creazione del servizio se in local storage è presente l'utente
   constructor() {
     const utenteSalvato = localStorage.getItem('utente');
-    if (utenteSalvato) {
-      try {
-        this.utenteSignal.set(JSON.parse(utenteSalvato));
-      } catch {
+
+    if (!utenteSalvato) return;
+
+    try {
+      const dati: unknown = JSON.parse(utenteSalvato);
+
+      if (
+        typeof dati === 'object' &&
+        dati !== null &&
+        'nome' in dati &&
+        'email' in dati &&
+        typeof dati.nome === 'string' &&
+        dati.nome.trim() !== '' &&
+        typeof dati.email === 'string' &&
+        dati.email.trim() !== ''
+      ) {
+        this.utenteSignal.set({
+          nome: dati.nome.trim(),
+          email: dati.email.trim(),
+        });
+      } else {
         localStorage.removeItem('utente');
       }
+    } catch {
+      localStorage.removeItem('utente');
     }
   }
 }
