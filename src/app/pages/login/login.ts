@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { AutenticazioneService } from '../../services/autenticazione-service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -17,11 +17,20 @@ export class Login {
   nome: string = '';
   email: string = '';
 
-  effettuaLogin(): void {
-    this.autenticazioneService.accedi(this.nome, this.email);
-    // destinazione di partenza
+  effettuaLogin(form: NgForm): void {
+    const nome = this.nome.trim();
+    const email = this.email.trim();
+
+    // Verifichiamo che il form sia valido e che i campi non siano vuoti
+    if (form.invalid || !nome || !email) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    this.autenticazioneService.accedi(nome, email);
+
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-    // riportiamo l'utente alla destinazione iniziale prima del login,se non presente, ritorna alla Home
+
     this.router.navigateByUrl(returnUrl && returnUrl.startsWith('/') ? returnUrl : '/');
   }
 }

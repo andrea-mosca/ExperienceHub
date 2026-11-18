@@ -7,18 +7,40 @@
 
                     <h2 class="text-center mb-4">Accedi a ExperienceHub</h2>
 
-                    <form (ngSubmit)="effettuaLogin()">
+                    <form #loginForm="ngForm" (ngSubmit)="effettuaLogin(loginForm)">
 
+                        <!-- Nome -->
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
+
                             <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="nome"
-                                placeholder="Inserisci il tuo nome" required />
+                                #nomeInput="ngModel" placeholder="Inserisci il tuo nome" required
+                                [class.is-invalid]="nomeInput.invalid && (nomeInput.touched || loginForm.submitted)" />
+
+                            @if (nomeInput.invalid && (nomeInput.touched || loginForm.submitted)) {
+                            <div class="invalid-feedback">
+                                Il nome è obbligatorio.
+                            </div>
+                            }
                         </div>
 
+                        <!-- Email -->
                         <div class="mb-4">
                             <label for="email" class="form-label">Email</label>
+
                             <input type="email" id="email" name="email" class="form-control" [(ngModel)]="email"
-                                placeholder="Inserisci la tua email" required />
+                                #emailInput="ngModel" placeholder="Inserisci la tua email" required email
+                                [class.is-invalid]="emailInput.invalid && (emailInput.touched || loginForm.submitted)" />
+
+                            @if (emailInput.invalid && (emailInput.touched || loginForm.submitted)) {
+                            <div class="invalid-feedback">
+                                @if (emailInput.errors?.['required']) {
+                                L'email è obbligatoria.
+                                } @else if (emailInput.errors?.['email']) {
+                                Inserisci un indirizzo email valido.
+                                }
+                            </div>
+                            }
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">

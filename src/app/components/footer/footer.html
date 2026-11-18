@@ -7,11 +7,33 @@
             Scopri nuove esperienze, passioni e avventure.
         </p>
 
+        <!-- Navigazione -->
         <div class="mb-3">
-            <a routerLink="" class="text-white text-decoration-none mx-2">Home</a>
+            <a routerLink="/" class="text-white text-decoration-none mx-2">Home</a>
             <a routerLink="/esperienze" class="text-white text-decoration-none mx-2">Esperienze</a>
-            <a routerLink="#" class="text-white text-decoration-none mx-2">Contatti</a>
         </div>
+
+        <!-- Profili professionali -->
+        <div class="mb-3">
+            <p class="text-white-50 small mb-2">Seguimi</p>
+
+            <a href="https://github.com/andrea-mosca" target="_blank" rel="noopener noreferrer"
+                class="text-white text-decoration-none mx-3" aria-label="Profilo GitHub">
+                <i class="bi bi-github me-1"></i>
+                GitHub
+            </a>
+
+            <a href="https://www.linkedin.com/in/andreamoscatelli" target="_blank" rel="noopener noreferrer"
+                class="text-white text-decoration-none mx-3" aria-label="Profilo LinkedIn">
+                <i class="bi bi-linkedin me-1"></i>
+                LinkedIn
+            </a>
+        </div>
+
+        <button type="button" class="btn btn-outline-light btn-sm mb-3" (click)="tornaInCima()">
+            <i class="bi bi-arrow-up me-2"></i>
+            Torna in cima
+        </button>
 
         <hr class="border-secondary">
 
