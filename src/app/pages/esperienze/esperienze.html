@@ -88,7 +88,7 @@
     @if (esperienzeFiltrate().length > 0) {
     <div class="row g-4">
         @for (esperienza of esperienzeFiltrate(); track esperienza.id) {
-        <div class="col-md-4">
+        <div class="col-sm-6 col-lg-4">
             <app-card-esperienza [esperienza]="esperienza">
             </app-card-esperienza>
         </div>

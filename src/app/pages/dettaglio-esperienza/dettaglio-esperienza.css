@@ -1,5 +1,6 @@
 .experience-image {
-    height: 450px;
+    width: 100%;
+    height: clamp(240px, 42vw, 450px);
     object-fit: cover;
 }
 .modale-backdrop {

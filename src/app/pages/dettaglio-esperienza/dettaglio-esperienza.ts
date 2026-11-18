@@ -1,7 +1,6 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { EsperienzeService } from '../../services/esperienze-service';
 import { AutenticazioneService } from '../../services/autenticazione-service';
@@ -16,7 +15,6 @@ import { StileEtichettaCategoriaPipe } from '../../pipes/stile-etichetta-categor
   imports: [
     RouterLink,
     NgClass,
-    FormsModule,
     DurataEsperienzaPipe,
     DisponibilitaEsperienza,
     DisponibilitaPipe,

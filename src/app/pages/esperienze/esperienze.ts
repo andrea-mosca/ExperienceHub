@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { CardEsperienza } from '../../components/card-esperienza/card-esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
 
 @Component({
   selector: 'app-esperienze',
-  imports: [RouterLink, CardEsperienza],
+  imports: [CardEsperienza],
   templateUrl: './esperienze.html',
   styleUrl: './esperienze.css',
 })

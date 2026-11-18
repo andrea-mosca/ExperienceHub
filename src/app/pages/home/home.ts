@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Esperienza } from '../../models/esperienza';
 import { CardEsperienza } from '../../components/card-esperienza/card-esperienza';
 import { EsperienzeService } from '../../services/esperienze-service';
 

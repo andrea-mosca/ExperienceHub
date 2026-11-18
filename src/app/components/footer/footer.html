@@ -8,26 +8,28 @@
         </p>
 
         <!-- Navigazione -->
-        <div class="mb-3">
-            <a routerLink="/" class="text-white text-decoration-none mx-2">Home</a>
-            <a routerLink="/esperienze" class="text-white text-decoration-none mx-2">Esperienze</a>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
+            <a routerLink="/" class="text-white text-decoration-none">Home</a>
+            <a routerLink="/esperienze" class="text-white text-decoration-none">Esperienze</a>
         </div>
 
         <!-- Profili professionali -->
         <div class="mb-3">
             <p class="text-white-50 small mb-2">Seguimi</p>
 
-            <a href="https://github.com/andrea-mosca" target="_blank" rel="noopener noreferrer"
-                class="text-white text-decoration-none mx-3" aria-label="Profilo GitHub">
-                <i class="bi bi-github me-1"></i>
-                GitHub
-            </a>
+            <div class="d-flex flex-wrap justify-content-center gap-4">
+                <a href="https://github.com/andrea-mosca" target="_blank" rel="noopener noreferrer"
+                    class="text-white text-decoration-none" aria-label="Profilo GitHub">
+                    <i class="bi bi-github me-1"></i>
+                    GitHub
+                </a>
 
-            <a href="https://www.linkedin.com/in/andreamoscatelli" target="_blank" rel="noopener noreferrer"
-                class="text-white text-decoration-none mx-3" aria-label="Profilo LinkedIn">
-                <i class="bi bi-linkedin me-1"></i>
-                LinkedIn
-            </a>
+                <a href="https://www.linkedin.com/in/andreamoscatelli" target="_blank" rel="noopener noreferrer"
+                    class="text-white text-decoration-none" aria-label="Profilo LinkedIn">
+                    <i class="bi bi-linkedin me-1"></i>
+                    LinkedIn
+                </a>
+            </div>
         </div>
 
         <button type="button" class="btn btn-outline-light btn-sm mb-3" (click)="tornaInCima()">
