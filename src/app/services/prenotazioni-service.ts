@@ -16,18 +16,31 @@ export class PrenotazioniService {
   private prenotazioniSignal = signal<Prenotazione[]>([]);
   prenotazioni = this.prenotazioniSignal.asReadonly();
 
+  caricamento = signal(false);
+  errore = signal<string | null>(null);
+
   // Recupera le prenotazioni di un utente
   caricaPrenotazioni(email: string): void {
-    this.http
-      .get<Prenotazione[]>(`${this.apiUrl}?utenteEmail=${encodeURIComponent(email)}`)
-      .subscribe({
-        next: (prenotazioni) => {
-          this.prenotazioniSignal.set(prenotazioni);
-        },
-        error: (errore) => {
-          console.error('Errore nel recupero delle prenotazioni:', errore);
-        },
-      });
+    this.caricamento.set(true);
+    this.errore.set(null);
+
+    this.prenotazioniSignal.set([]);
+
+    this.http.get<Prenotazione[]>(this.apiUrl).subscribe({
+      next: (prenotazioni) => {
+        const prenotazioniUtente = prenotazioni.filter(
+          (prenotazione) => prenotazione.utenteEmail === email,
+        );
+
+        this.prenotazioniSignal.set(prenotazioniUtente);
+        this.caricamento.set(false);
+      },
+      error: (errore) => {
+        console.error('Errore nel recupero delle prenotazioni:', errore);
+        this.errore.set('Impossibile caricare le prenotazioni. Riprova.');
+        this.caricamento.set(false);
+      },
+    });
   }
 
   // Salva una nuova prenotazione

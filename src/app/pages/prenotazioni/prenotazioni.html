@@ -1,1 +1,122 @@
-<p>prenotazioni works!</p>
+<main class="container py-5">
+
+    <!-- Intestazione -->
+    <div class="mb-4">
+        <h1 class="fw-bold mb-2">Le mie prenotazioni</h1>
+        <p class="text-body-secondary">
+            Qui puoi consultare tutte le esperienze che hai prenotato.
+        </p>
+    </div>
+
+    <!-- Caricamento -->
+    @if (caricamento()) {
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+        <p class="mt-3 text-body-secondary">
+            Caricamento delle prenotazioni...
+        </p>
+    </div>
+    }
+
+    <!-- Errore -->
+    @else if (errore()) {
+    <div class="alert alert-danger" role="alert">
+        <p class="mb-3">{{ errore() }}</p>
+
+        <button class="btn btn-outline-danger" (click)="ricaricaPrenotazioni()">
+            Riprova
+        </button>
+    </div>
+    }
+
+    <!-- Nessuna prenotazione -->
+    @else if (prenotazioni().length === 0) {
+    <div class="text-center border rounded-3 p-5">
+        <i class="bi bi-calendar2-x display-4 text-secondary"></i>
+
+        <h2 class="h4 mt-3">Nessuna prenotazione</h2>
+
+        <p class="text-body-secondary">
+            Non hai ancora prenotato nessuna esperienza.
+        </p>
+
+        <a routerLink="/esperienze" class="btn btn-primary mt-2">
+            Esplora le esperienze
+        </a>
+    </div>
+    }
+
+    <!-- Elenco prenotazioni -->
+    @else {
+    <div class="row g-3">
+
+        @for (prenotazione of prenotazioni(); track prenotazione.id) {
+        <div class="col-12">
+
+            <article class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-3">
+
+                        <div>
+                            <h2 class="h5 fw-bold mb-1">
+                                {{ prenotazione.titoloEsperienza }}
+                            </h2>
+
+                            <span class="text-body-secondary small">
+                                Codice prenotazione: #{{ prenotazione.id }}
+                            </span>
+                        </div>
+
+                        <span class="badge text-bg-success align-self-start">
+                            Confermata
+                        </span>
+
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-sm-4">
+                            <span class="d-block text-body-secondary small">
+                                Data prenotazione
+                            </span>
+
+                            <strong>
+                                {{ prenotazione.dataPrenotazione | date:'dd/MM/yyyy, HH:mm' }}
+                            </strong>
+                        </div>
+
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-body-secondary small">
+                                Numero posti
+                            </span>
+
+                            <strong>
+                                {{ prenotazione.numeroPosti }}
+                            </strong>
+                        </div>
+
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-body-secondary small">
+                                Totale prenotazione
+                            </span>
+
+                            <strong>
+                                {{ prenotazione.prezzoTotale }} €
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+            </article>
+
+        </div>
+        }
+
+    </div>
+    }
+
+</main>
