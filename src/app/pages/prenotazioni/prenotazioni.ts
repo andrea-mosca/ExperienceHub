@@ -50,7 +50,7 @@ export class Prenotazioni implements OnInit {
     // Recuperiamo l'esperienza associata alla prenotazione
     const esperienza = this.esperienzeService
       .esperienze()
-      .find((e) => e.id === prenotazione.esperienzaId);
+      .find((e) => String(e.id) === String(prenotazione.esperienzaId));
 
     if (!esperienza) {
       this.messaggioAnnullamento.set({
