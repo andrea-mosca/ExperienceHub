@@ -87,8 +87,15 @@
                     </h2>
                 </div>
 
-                <button class="btn btn-primary btn-lg" (click)="prenota()">
+                <button type="button" class="btn btn-lg" [class.btn-primary]="esperienza.postiDisponibili > 0"
+                    [class.btn-secondary]="esperienza.postiDisponibili <= 0"
+                    [disabled]="esperienza.postiDisponibili <= 0" (click)="prenota()">
+                    @if (esperienza.postiDisponibili > 0) {
                     Prenota ora
+                    } @else {
+                    <i class="bi bi-x-circle me-2"></i>
+                    Esperienza esaurita
+                    }
                 </button>
                 @if (mostraModuloPrenotazione) {
 
